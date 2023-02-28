@@ -1,9 +1,9 @@
+#Main image project based 
 FROM python:3.11
-
 RUN apt-get update && apt-get install
-
+#Means Python will not try to write .pyc files
 ENV PYTHONUNBUFFERED 1
-
+#Ensures our console output is not buffered by Docker
 ENV PYTHONDONTWRITEBYTECODE 1
 RUN mkdir /code
 WORKDIR /code
