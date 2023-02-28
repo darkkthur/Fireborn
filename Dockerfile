@@ -20,6 +20,7 @@ COPY . /code/
 COPY docker-entrypoint.sh /
 #ENTRYPOINT [ "sh","docker-entrypoint.sh" ]
 
-
+RUN adduser -D burned
+USER burned
 #This executes the django project in a gunicorn deploy method
 CMD ["gunicorn", "-c", "config/gunicorn/conf.py", "--bind", ":8000", "--chdir", "fireborn", "fireborn.wsgi:application"]
