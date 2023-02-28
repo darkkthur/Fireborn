@@ -1,0 +1,53 @@
+body {
+    max-width: 100%;
+    overflow-y: auto;
+    min-height: -webkit-fill-available;
+}
+
+
+html {
+    max-width: 100%;
+    height: -webkit-fill-available;
+}
+
+.bg-main {
+    background-color: #171717 !important;
+
+}
+.bg-second {
+    background-color: #262626 !important;
+    
+}
+
+#sidebar {
+    z-index: 10;
+    height: 100vh;
+}
+#navbar {
+    z-index: 9;
+}
+.card   {
+    box-shadow: rgba(148, 157, 189, 0.27) 0px 0px 0.25em, rgba(45, 62, 94, 0.05) 0px 0.25em 1em;
+}
+
+
+
+
+.bg-nigromante {
+    background-color: rebeccapurple !important;
+}
+
+.bg-nigromante-hover:hover {
+    background-color: rebeccapurple !important;
+}
+
+
+.badge {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px !important;
+}
+
+
+#banner {
+    height: 50vh;
+
+}

@@ -1,0 +1,71 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}" class="light">
+
+<head>
+  {% load pwa %}
+  {% progressive_web_app_meta %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- favicon -->
+  <!-- TODO CHANGE THIS ICON DINAMICALLY -->
+  <link rel="icon" type="image/png" href="{% static '/img/favicon.ico' %}" />
+  <!-- Bootstrap5 -->
+  {% load bootstrap5 %}
+  {# CSS Bootstrap #}
+  {% bootstrap_css %}
+  <!-- Nuestro Busines Root Stylesheet -->
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+  <!-- Owl Carousel 2 Root Stylesheet -->
+  <link rel="stylesheet" href="{% static '/js/OwlCarousel2/dist/assets/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static '/js/OwlCarousel2/dist/assets/owl.theme.default.min.css' %}">
+
+  <!--google-->
+  <!--fonts-->
+  <!-- TODO MAKE THIS FONTS STATICS-->
+
+  <!--icons-->
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <title>{% block title %}{% endblock title %} | Arturo Sáenz</title>
+</head>
+
+<body class="bg-light">
+  
+  {% block topbar %}
+  {% include 'topbar.html' %}
+  {% endblock topbar %}
+  <div class="container-fluid">
+    <div class="row">
+      {% block navbar %}
+      {% include 'navbar.html' %}
+      {% endblock navbar %}
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-10">
+
+            {% block content %}
+            {% endblock content %}
+
+      </div>
+
+
+    </div>
+  </div>
+  {% block footer %}
+  {% include 'footer.html' %}
+  {% endblock footer %}
+
+  {% bootstrap_javascript %}
+  <script src="{% static 'js/jquery-3.6.1.min.js' %}""></script>
+    <script src=" {% static 'js/OwlCarousel2/dist/owl.carousel.min.js' %}"></script>
+  <!--<script src="{% static 'js/script.js' %}" type="text/javascript"></script>  -->
+</body>
+
+</html>

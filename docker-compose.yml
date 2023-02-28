@@ -1,0 +1,45 @@
+version: '3'
+services:
+    db:
+      container_name: PostgreSQL
+      image: postgres:14.5
+      environment:
+        - POSTGRES_DB=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      restart: always
+
+    web:
+        container_name: Fireborn_PWA
+        build:
+          context: .
+          dockerfile: Dockerfile
+        env_file:
+            - /context/.env
+        volumes: 
+            - staticfiles:/code/staticfiles
+            - .:/code
+        ports:
+            - "8000:8000"
+        restart: always
+        depends_on:
+            - db
+    nginx:
+      container_name: NGINX
+      build: 
+          context: ./config/nginx
+          dockerfile: Dockerfile
+      volumes:
+        - static:/code/static
+      ports:
+        - "80:80"
+      depends_on:
+        - web
+
+volumes:
+  .:
+  postgres_data:
+  staticfiles:
+  static:
