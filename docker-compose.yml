@@ -8,14 +8,35 @@ services:
     environment:
       POSTGRES_DB: ($${DB_NAME})
       POSTGRES_USER: ($${DB_USER})
-      POSTGRES_PASSWORD: ($${DB_PASSWORD})
+      POSTGRES_PASSWORD: ($${DB_PASSWORD}) 
       PGDATA: /var/lib/postgresql/data
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks: 
+      - db
     restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: PGAdmin4 
+    env_file:
+      - /context/db.env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin4_data:/var/lib/pgadmin4/data/
+    depends_on:
+      - db
+    networks: 
+      - db
+      - admin
+    restart: always
 
   web:
     container_name: Fireborn_PWA
@@ -24,14 +45,18 @@ services:
       dockerfile: Dockerfile
     env_file:
       - /context/.env
+      - /context/db.env
     volumes:
       - staticfiles:/code/staticfiles
       - .:/code
     ports:
       - "8000:8000"
-    restart: always
     depends_on:
       - db
+    networks: 
+      - web
+    restart: always
+
   nginx:
     container_name: NGINX
     build:
@@ -44,10 +69,22 @@ services:
       - "80:80"
     depends_on:
       - web
+    networks: 
+      - web
+    restart: always
+
+networks:
+  db:
+    name: databases
+  admin:
+    name: administration
+  web:
+    name: fireborn-web
 
 volumes:
   .:
   postgres_data:
+  pgadmin4_data:
   staticfiles:
   static:
   media:
