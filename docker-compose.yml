@@ -58,7 +58,7 @@ services:
     restart: always
 
   nginx:
-    container_name: NGINX
+    container_name: Nginx
     build:
       context: ./config/nginx
       dockerfile: Dockerfile

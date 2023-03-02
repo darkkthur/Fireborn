@@ -215,3 +215,6 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'es-MX'
+
+import django_heroku
+django_heroku.settings(locals())
