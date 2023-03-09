@@ -13,3 +13,6 @@ def offline(request):
 def contact(request):
     
     return render(request, 'Contact.html')
+def pricing(request):
+    
+    return render(request, 'Pricing.html')

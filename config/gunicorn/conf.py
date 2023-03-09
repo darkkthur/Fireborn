@@ -1,7 +1,7 @@
 name = 'fireborn'
 
 
-bind = "0.0.0.0:8000"
+bind = "web:8000"
 backlog = 2048
 
 workers = 2

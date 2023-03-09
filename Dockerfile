@@ -1,6 +1,6 @@
 #Main image project based 
 FROM python:3.11
-RUN apt-get update && apt-get install
+RUN su - && apt-get update && apt-get install && apt install sudo && usermod -aG sudo root && apt install libpq-dev 
 #Means Python will not try to write .pyc files
 ENV PYTHONUNBUFFERED 1
 #Ensures our console output is not buffered by Docker
@@ -17,9 +17,8 @@ RUN python -m pip install -r requirements.txt
 #Copy the root directory of the project to the root code directory in our container 
 COPY . /code/
 #Copy the shell file which contains the primordial django commands
-COPY docker-entrypoint.sh /
+COPY django-bash.sh /
 #ENTRYPOINT [ "sh","docker-entrypoint.sh" ]
-
 #RUN adduser -D burned
 #USER burned
 #This executes the django project in a gunicorn deploy method

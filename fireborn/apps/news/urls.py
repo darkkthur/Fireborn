@@ -5,13 +5,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns  
 
-app_name = 'home'
+app_name = 'news'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('Offline/', views.offline, name='offline'),
-    path('Contact/', views.contact, name='contact'),
-    path('Pricing/', views.pricing, name='pricing'),
+    path('', views.index, name='news'),
+    path('new/', views.new, name='new'),
 ]
 urlpatterns += staticfiles_urlpatterns()
  

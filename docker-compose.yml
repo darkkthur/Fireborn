@@ -3,49 +3,42 @@ services:
   db:
     container_name: PostgreSQL
     image: postgres:14.5
-    env_file:
-      - /context/db.env
+    env_file: .env
     environment:
-      POSTGRES_DB: ($${DB_NAME})
-      POSTGRES_USER: ($${DB_USER})
-      POSTGRES_PASSWORD: ($${DB_PASSWORD}) 
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /var/lib/postgresql/data
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-    networks: 
-      - db
-    restart: unless-stopped
+      - '5432:5432'
+    
+    expose: 
+      - 5432/tcp
+    restart: always
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: PGAdmin4 
-    env_file:
-      - /context/db.env
+    env_file: .env
     environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGA_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGA_PASSWORD}
     ports:
       - "5051:80"
-    volumes:
-      - pgadmin4_data:/var/lib/pgadmin4/data/
     depends_on:
       - db
-    networks: 
-      - db
-      - admin
     restart: always
 
   web:
     container_name: Fireborn_PWA
+   # command: ["bash", "/code/django-bash.sh"]
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - /context/.env
-      - /context/db.env
+    env_file: .env
     volumes:
       - staticfiles:/code/staticfiles
       - .:/code
@@ -53,8 +46,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    networks: 
-      - web
     restart: always
 
   nginx:
@@ -69,22 +60,11 @@ services:
       - "80:80"
     depends_on:
       - web
-    networks: 
-      - web
     restart: always
-
-networks:
-  db:
-    name: databases
-  admin:
-    name: administration
-  web:
-    name: fireborn-web
 
 volumes:
   .:
   postgres_data:
-  pgadmin4_data:
   staticfiles:
   static:
   media:

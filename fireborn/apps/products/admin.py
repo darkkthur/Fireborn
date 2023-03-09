@@ -1,10 +1,7 @@
-
-
 from django.contrib import admin
 
-
-
-from .models import Categoria, Servicio
+# Register your models here.
+from .models import Categoria, Producto
 
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre_categoria', 'numero_productos', 'categoria_popular')
@@ -14,9 +11,9 @@ class CategoriaAdmin(admin.ModelAdmin):
 admin.site.register(Categoria, CategoriaAdmin)
 
 
-class ServicioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'precio','categoria','duracion')
-    list_filter = ('categoria','precio','duracion', 'numero_reservas')
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'descripcion','categoria','precio','cantidad_inventario','numero_ventas')
+    list_filter = ( 'numero_ventas','categoria','destacado','cantidad_inventario')
     search_fields = ('nombre','categoria','descripcion')
 
-admin.site.register(Servicio, ServicioAdmin)
+admin.site.register(Producto, ProductoAdmin)
