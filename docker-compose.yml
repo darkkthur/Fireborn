@@ -13,11 +13,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
-    
+      - "5432:5432"
     expose: 
       - 5432/tcp
-    restart: always
+    networks: 
+      - db
+      - web
+    restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
@@ -30,6 +32,9 @@ services:
       - "5051:80"
     depends_on:
       - db
+    networks: 
+      - db
+      - admin
     restart: always
 
   web:
@@ -46,7 +51,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    restart: always
+    networks: 
+      - web
+      - db
 
   nginx:
     container_name: Nginx
@@ -60,7 +67,17 @@ services:
       - "80:80"
     depends_on:
       - web
+    networks: 
+      - web
     restart: always
+
+networks:
+  db:
+    name: databases
+  admin:
+    name: administration
+  web:
+    name: fireborn-web
 
 volumes:
   .:
